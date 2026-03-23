@@ -4,14 +4,14 @@ import ToolPage from '../../layouts/ToolPage.astro';
 
 <ToolPage
   title="QuestionBank — HioTEC"
-  description="DSE 練習題庫即將推出，提供全科歷屆試題、智能練習追蹤。"
+  description="DSE 數學練習題庫，提供全科歷屆試題、智能練習追蹤。"
   toolName="QuestionBank"
-  toolTagline="DSE 練習題庫"
+  toolTagline="DSE 數學練習題庫"
 >
-  <div class="coming-soon-page">
+  <div class="qb-page">
     <div class="container">
-      <div class="coming-soon-card">
-        <div class="cs-icon">
+      <div class="qb-card">
+        <div class="qb-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
             <rect x="4" y="2" width="16" height="20" rx="2"/>
             <path d="M8 10 L16 10"/>
@@ -19,12 +19,9 @@ import ToolPage from '../../layouts/ToolPage.astro';
             <path d="M15 17 L17 19 L21 15"/>
           </svg>
         </div>
-        <div class="cs-badge">
-          <span class="badge badge-coming-soon">即將推出</span>
-        </div>
-        <h2 class="cs-title">正在開發中</h2>
-        <p class="cs-desc">
-          QuestionBank 是一套完整的 DSE 練習題庫，讓你系統性地備考每一科。
+        <h2 class="qb-title">DSE 數學題庫</h2>
+        <p class="qb-desc">
+          涵蓋 2012–2025 歷屆試題，支持智能組卷、錯題追蹤、AI 輔助解題。
         </p>
 
         <div class="feature-list">
@@ -34,7 +31,7 @@ import ToolPage from '../../layouts/ToolPage.astro';
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
               </svg>
             </div>
-            <span>全科 DSE 歷屆試題收錄</span>
+            <span>2,800+ 題目，覆蓋 Paper 1 & Paper 2</span>
           </div>
           <div class="feature-item">
             <div class="feature-icon">
@@ -42,7 +39,7 @@ import ToolPage from '../../layouts/ToolPage.astro';
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
               </svg>
             </div>
-            <span>智能錯題追蹤與複習提醒</span>
+            <span>按主題、難度、年份篩選</span>
           </div>
           <div class="feature-item">
             <div class="feature-icon">
@@ -58,22 +55,30 @@ import ToolPage from '../../layouts/ToolPage.astro';
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
               </svg>
             </div>
-            <span>模擬考試計時模式</span>
+            <span>智能組卷與模擬考試</span>
           </div>
         </div>
 
-        <a href="/" class="btn btn-ghost back-btn">返回首頁</a>
+        <div class="qb-actions">
+          <a href="https://math.hio.zone" target="_blank" rel="noopener" class="btn btn-primary">
+            進入題庫
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+              <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+          <a href="/" class="btn btn-ghost">返回首頁</a>
+        </div>
       </div>
     </div>
   </div>
 </ToolPage>
 
 <style>
-  .coming-soon-page {
+  .qb-page {
     padding: var(--space-2xl) 0 var(--space-3xl);
   }
 
-  .coming-soon-card {
+  .qb-card {
     background: var(--color-surface);
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border-light);
@@ -86,7 +91,7 @@ import ToolPage from '../../layouts/ToolPage.astro';
     gap: var(--space-md);
   }
 
-  .cs-icon {
+  .qb-icon {
     width: 64px;
     height: 64px;
     background: var(--color-accent-light);
@@ -97,12 +102,12 @@ import ToolPage from '../../layouts/ToolPage.astro';
     color: var(--color-accent);
   }
 
-  .cs-title {
+  .qb-title {
     font-size: var(--text-h3);
     font-weight: 900;
   }
 
-  .cs-desc {
+  .qb-desc {
     font-size: var(--text-body);
     color: var(--color-text-secondary);
     line-height: 1.7;
@@ -130,7 +135,15 @@ import ToolPage from '../../layouts/ToolPage.astro';
     color: var(--color-success);
   }
 
-  .back-btn {
-    margin-top: var(--space-sm);
+  .qb-actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
   }
 </style>
