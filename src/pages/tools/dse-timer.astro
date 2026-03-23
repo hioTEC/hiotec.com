@@ -1,0 +1,1156 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="DSE Timer — HioTEC"
+  description="DSE 考場模擬計時器，支援廣東話語音提示、模擬時鐘、全螢幕模式。"
+  noFooter={true}
+>
+  <div class="timer-app">
+    <!-- App Header -->
+    <header class="app-header" id="appHeader">
+      <button id="backBtn" class="icon-btn" style="display:none" title="返回">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      </button>
+      <a href="/" class="app-logo" id="appLogoLink">HioTEC</a>
+      <div class="page-title" id="pageTitle">DSE 考場計時器</div>
+      <div class="header-right">
+        <button class="icon-btn" id="settingsBtn" title="設定">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.58 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        </button>
+        <button class="icon-btn" id="voiceToggle" title="語音開關">
+          <svg id="icon-mute" viewBox="0 0 24 24" fill="currentColor" style="display:block"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+          <svg id="icon-sound" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </button>
+        <button class="icon-btn" id="fullscreenBtn" title="全螢幕">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="app-body">
+
+      <!-- VIEW 1: SUBJECT MENU -->
+      <div id="view-menu" class="view active">
+        <div class="menu-container">
+          <div class="grid-section-title">核心科目 (Core)</div>
+          <div class="subject-grid" id="grid-core"></div>
+          <div class="grid-section-title">選修科目 (Electives)</div>
+          <div class="subject-grid" id="grid-electives"></div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: SETUP -->
+      <div id="view-setup" class="view">
+        <div class="setup-wrapper">
+          <div class="setup-box">
+            <h2 class="setup-title">考試設定</h2>
+            <div class="form-row">
+              <div class="form-group">
+                <label>已選科目</label>
+                <input type="text" id="setupSubjectInput" readonly class="readonly-input" />
+              </div>
+              <div class="form-group">
+                <label>卷別</label>
+                <input type="text" id="setupPaperInput" readonly class="readonly-input" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>試場編號</label>
+                <input type="text" id="inputCode" />
+              </div>
+              <div class="form-group">
+                <label>應考語言</label>
+                <select id="inputLang">
+                  <option value="中文">中文 (Chinese)</option>
+                  <option value="英文">英文 (English)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>試場名稱</label>
+              <input type="text" id="inputVenue" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>考試日期</label>
+                <input type="date" id="inputDate" />
+              </div>
+              <div class="form-group">
+                <label>開考時間</label>
+                <input type="time" id="inputStartTime" value="08:30" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>考試時長（分鐘）</label>
+              <input type="number" id="inputDuration" min="1" max="300" />
+            </div>
+            <button class="voice-test-btn" id="testVoiceBtn">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              測試語音
+            </button>
+            <button class="btn-primary" id="startExamBtn">確認並顯示計時器</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: TIMER -->
+      <div id="view-timer" class="view timer-view">
+        <!-- Left: Info Panel -->
+        <div class="panel-left">
+          <div class="info-block">
+            <div class="info-label">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              試場編號
+            </div>
+            <div class="info-content mono" id="infoVenueCode" contenteditable="true" spellcheck="false">--</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99z"/></svg>
+              試場名稱
+            </div>
+            <div class="info-content" id="infoVenueName" contenteditable="true" spellcheck="false">--</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+              科目 / 卷別
+            </div>
+            <div class="info-content" id="infoSubject" contenteditable="true" spellcheck="false">--</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              考試時間
+            </div>
+            <div class="info-content" id="infoTime" contenteditable="true" spellcheck="false">--</div>
+          </div>
+          <div class="info-block" style="margin-bottom:0">
+            <div class="info-label">應考語言</div>
+            <div class="info-content" id="infoLang" contenteditable="true" spellcheck="false">--</div>
+          </div>
+        </div>
+
+        <!-- Right: Clock Panel -->
+        <div class="panel-right">
+          <div class="clock">
+            <div class="hand hour" id="hourHand"></div>
+            <div class="hand minute" id="minuteHand"></div>
+            <div class="hand second" id="secondHand"></div>
+            <div id="markings"></div>
+          </div>
+
+          <div class="digital-wrapper">
+            <div class="status-badge st-wait" id="statusBadge">準備中</div>
+            <div class="remain-label">現在時間</div>
+            <div class="big-timer mono" id="realTimeDisplay">00:00:00</div>
+            <div class="remain-label" id="remainLabel">距離完卷</div>
+            <div class="remain-time mono" id="remainTimeDisplay">--</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-title">預設設定</div>
+      <div class="form-group">
+        <label>預設試場編號</label>
+        <input type="text" id="setDefCode" />
+      </div>
+      <div class="form-group" style="margin-top:var(--space-md)">
+        <label>預設試場名稱</label>
+        <input type="text" id="setDefVenue" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-text" id="cancelSettingsBtn">取消</button>
+        <button class="btn-save" id="saveSettingsBtn">儲存</button>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  /* Timer app takes full remaining viewport height */
+  .timer-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    padding-top: 0; /* overrides the nav offset — this page uses its own header */
+  }
+
+  /* --- App Header --- */
+  .app-header {
+    height: 60px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-lg);
+    background: rgba(250, 247, 242, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 50;
+    gap: var(--space-md);
+  }
+
+  .app-logo {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .page-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-text-primary);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-left: auto;
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: background var(--duration-short) var(--ease-move), color var(--duration-short) var(--ease-move);
+  }
+
+  .icon-btn:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-accent);
+  }
+
+  .icon-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* --- App Body --- */
+  .app-body {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* --- Views --- */
+  .view {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    animation: fadeSlideIn 0.3s var(--ease-enter);
+  }
+
+  .view.active {
+    display: block;
+  }
+
+  .timer-view.active {
+    display: flex;
+    align-items: center;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- Menu View --- */
+  .menu-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-xl) var(--space-2xl);
+  }
+
+  .grid-section-title {
+    font-size: var(--text-body);
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    margin: var(--space-xl) 0 var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .grid-section-title::before,
+  .grid-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+  }
+
+  .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-md);
+  }
+
+  :global(.subject-card) {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-short) var(--ease-enter),
+                box-shadow var(--duration-short) var(--ease-enter);
+  }
+
+  :global(.subject-card:hover) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  :global(.subject-title) {
+    font-weight: 700;
+    font-size: var(--text-body-sm);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-md);
+    text-align: center;
+  }
+
+  :global(.papers-container) {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  :global(.paper-btn) {
+    flex: 1;
+    min-width: 80px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    cursor: pointer;
+    font-size: var(--text-body-sm);
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    transition: all var(--duration-short) var(--ease-move);
+  }
+
+  :global(.paper-btn:hover) {
+    background: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 12px var(--color-accent-subtle);
+  }
+
+  :global(.paper-btn:hover .paper-time) {
+    color: rgba(255,255,255,0.8);
+  }
+
+  :global(.paper-time) {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  :global(.custom-card) {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    border: 2px dashed var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color var(--duration-short) var(--ease-move),
+                background var(--duration-short) var(--ease-move);
+  }
+
+  :global(.custom-card:hover) {
+    border-color: var(--color-accent);
+    background: var(--color-accent-light);
+  }
+
+  :global(.custom-card-label) {
+    font-weight: 700;
+    font-size: var(--text-body-sm);
+    color: var(--color-accent);
+  }
+
+  /* --- Setup View --- */
+  .setup-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    padding: var(--space-xl);
+  }
+
+  .setup-box {
+    background: var(--color-surface);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid var(--color-border-light);
+  }
+
+  .setup-title {
+    font-size: var(--text-h3);
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .form-row {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .form-group {
+    margin-bottom: var(--space-md);
+  }
+
+  .readonly-input {
+    background: var(--color-bg) !important;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    cursor: default;
+  }
+
+  .voice-test-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: var(--space-md);
+    transition: background var(--duration-short) var(--ease-move);
+  }
+
+  .voice-test-btn:hover {
+    background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  }
+
+  .btn-primary {
+    display: block;
+    width: 100%;
+    background: var(--color-text-primary);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--duration-short) var(--ease-move);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:hover {
+    background: #000;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* --- Timer View --- */
+  .timer-view {
+    padding: 0;
+  }
+
+  .panel-left {
+    flex: 1;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--color-border-light);
+    padding: var(--space-2xl);
+    margin: 0 var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 85vh;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .info-block {
+    margin-bottom: 3.5vh;
+  }
+
+  .info-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .info-content {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.25;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-short) var(--ease-move);
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--font-body);
+  }
+
+  .info-content:hover {
+    border-bottom-color: var(--color-border);
+  }
+
+  .info-content:focus {
+    border-bottom-color: var(--color-accent);
+  }
+
+  #infoVenueCode {
+    font-family: var(--font-mono);
+    color: var(--color-accent);
+  }
+
+  .panel-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0;
+  }
+
+  /* --- Analog Clock --- */
+  .clock {
+    width: 300px;
+    height: 300px;
+    background: var(--color-surface);
+    border-radius: 50%;
+    border: 6px solid var(--color-text-primary);
+    position: relative;
+    box-shadow: var(--shadow-xl);
+    margin-bottom: var(--space-2xl);
+    flex-shrink: 0;
+  }
+
+  .clock::after {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    background: var(--color-text-primary);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 10;
+  }
+
+  .hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    background: var(--color-text-primary);
+    border-radius: 100px;
+    transform: translateX(-50%) rotate(0deg);
+  }
+
+  .hour {
+    width: 7px;
+    height: 75px;
+    z-index: 5;
+  }
+
+  .minute {
+    width: 5px;
+    height: 112px;
+    z-index: 6;
+    background: #4b5563;
+  }
+
+  .second {
+    width: 2px;
+    height: 128px;
+    background: var(--color-error);
+    z-index: 7;
+  }
+
+  :global(.marking) {
+    position: absolute;
+    width: 2px;
+    height: 10px;
+    background: var(--color-text-tertiary);
+    left: 50%;
+    top: 10px;
+    transform-origin: 50% 135px;
+  }
+
+  :global(.marking.bold) {
+    width: 3px;
+    height: 16px;
+    background: var(--color-text-secondary);
+  }
+
+  /* --- Digital Display --- */
+  .digital-wrapper {
+    text-align: center;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 18px;
+    border-radius: var(--radius-full);
+    font-size: var(--text-lead);
+    font-weight: 700;
+    font-family: var(--font-body);
+    margin-bottom: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .st-wait { color: var(--color-warning); }
+  .st-run  { color: var(--color-success); }
+  .st-end  { color: var(--color-error); }
+
+  .remain-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+
+  .big-timer {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin: 4px 0 12px;
+    color: var(--color-text-primary);
+  }
+
+  .remain-time {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 4px;
+    font-family: var(--font-body);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* --- Modal --- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 23, 21, 0.5);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.active {
+    display: flex;
+    animation: fadeSlideIn 0.2s var(--ease-enter);
+  }
+
+  .modal-box {
+    background: var(--color-surface);
+    width: 90%;
+    max-width: 400px;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .modal-title {
+    font-size: var(--text-h3);
+    font-weight: 700;
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-body);
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+
+  .btn-text {
+    background: none;
+    border: none;
+    padding: 9px 14px;
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-body-sm);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background var(--duration-short) var(--ease-move);
+  }
+
+  .btn-text:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+  }
+
+  .btn-save {
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-body-sm);
+    cursor: pointer;
+    transition: background var(--duration-short) var(--ease-move);
+  }
+
+  .btn-save:hover {
+    background: var(--color-accent-hover);
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 900px) {
+    .timer-view.active {
+      flex-direction: column;
+      display: block;
+      padding: var(--space-lg);
+      overflow-y: auto;
+    }
+
+    .panel-left {
+      width: 100%;
+      margin: 0 0 var(--space-xl);
+      flex: none;
+      max-height: none;
+      padding: var(--space-lg);
+    }
+
+    .info-content {
+      font-size: 1.4rem;
+    }
+
+    .panel-right {
+      width: 100%;
+      padding: 0 0 var(--space-2xl);
+      flex: none;
+    }
+
+    .clock {
+      width: 220px;
+      height: 220px;
+      margin-bottom: var(--space-xl);
+      border-width: 5px;
+    }
+
+    :global(.marking) {
+      transform-origin: 50% 100px;
+    }
+
+    .big-timer {
+      font-size: 3rem;
+    }
+
+    .page-title {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .setup-box {
+      padding: var(--space-lg);
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>
+
+<script>
+  // --- Data ---
+  const subjectsData = {
+    core: [
+      { name: '中國語文 (Chin Lang)', papers: [{ name: '卷一 (閱讀)', time: 90 }, { name: '卷二 (寫作)', time: 135 }] },
+      { name: '英國語文 (Eng Lang)', papers: [{ name: 'Paper 1 (Reading)', time: 90 }, { name: 'Paper 2 (Writing)', time: 120 }, { name: 'Paper 3 (Listening)', time: 130 }] },
+      { name: '數學必修 (Math Comp)', papers: [{ name: 'Paper 1 (LQ)', time: 135 }, { name: 'Paper 2 (MC)', time: 75 }] },
+      { name: '數學延伸 (Math Ext)', papers: [{ name: 'M1 (Calculus)', time: 150 }, { name: 'M2 (Algebra)', time: 150 }] },
+      { name: '公民與社會發展 (CS)', papers: [{ name: 'One Paper', time: 120 }] },
+    ],
+    electives: [
+      { name: '物理 (Physics)', papers: [{ name: 'Paper 1', time: 150 }, { name: 'Paper 2', time: 60 }] },
+      { name: '化學 (Chemistry)', papers: [{ name: 'Paper 1', time: 150 }, { name: 'Paper 2', time: 60 }] },
+      { name: '生物 (Biology)', papers: [{ name: 'Paper 1', time: 150 }, { name: 'Paper 2', time: 60 }] },
+      { name: '經濟 (Economics)', papers: [{ name: 'Paper 1', time: 60 }, { name: 'Paper 2', time: 150 }] },
+      { name: '企業會計 (BAFS)', papers: [{ name: 'Paper 1', time: 75 }, { name: 'Paper 2 (Acct)', time: 135 }] },
+      { name: '地理 (Geography)', papers: [{ name: 'Paper 1', time: 150 }, { name: 'Paper 2', time: 75 }] },
+      { name: '歷史 (History)', papers: [{ name: 'Paper 1', time: 120 }, { name: 'Paper 2', time: 75 }] },
+      { name: '中史 (Chi Hist)', papers: [{ name: '卷一', time: 135 }, { name: '卷二', time: 80 }] },
+      { name: '資訊科技 (ICT)', papers: [{ name: 'Paper 1', time: 120 }, { name: 'Paper 2', time: 90 }] },
+    ],
+  };
+
+  // --- State ---
+  let currentView = 'menu';
+  let examData: Record<string, any> = {};
+  let isVoiceEnabled = false;
+  let timerInterval: number | null = null;
+  let voiceFlags: Record<string, boolean> = {};
+  let defaultSettings = { code: 'HKEAA', venue: 'Hong Kong Examinations and Assessment Authority' };
+
+  // --- Init ---
+  function init() {
+    loadSettings();
+    renderMenu();
+    generateClockMarkings();
+    updateRealTimeClock();
+    timerInterval = window.setInterval(updateRealTimeClock, 1000);
+
+    const dateInput = document.getElementById('inputDate') as HTMLInputElement;
+    if (dateInput) dateInput.valueAsDate = new Date();
+
+    if (window.speechSynthesis) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+
+    // Wire up buttons
+    document.getElementById('backBtn')?.addEventListener('click', handleNavBack);
+    document.getElementById('settingsBtn')?.addEventListener('click', openSettings);
+    document.getElementById('voiceToggle')?.addEventListener('click', toggleVoice);
+    document.getElementById('fullscreenBtn')?.addEventListener('click', toggleFull);
+    document.getElementById('testVoiceBtn')?.addEventListener('click', testVoice);
+    document.getElementById('startExamBtn')?.addEventListener('click', startExam);
+    document.getElementById('cancelSettingsBtn')?.addEventListener('click', closeSettings);
+    document.getElementById('saveSettingsBtn')?.addEventListener('click', saveSettings);
+
+    // Close modal on overlay click
+    document.getElementById('settingsModal')?.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeSettings();
+    });
+  }
+
+  // --- Render Menu ---
+  function renderMenu() {
+    renderGrid('core', subjectsData.core);
+    renderGrid('electives', subjectsData.electives);
+  }
+
+  function renderGrid(id: string, list: typeof subjectsData.core) {
+    const grid = document.getElementById(`grid-${id}`);
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    list.forEach(sub => {
+      const card = document.createElement('div');
+      card.className = 'subject-card';
+
+      const title = document.createElement('div');
+      title.className = 'subject-title';
+      title.textContent = sub.name;
+      card.appendChild(title);
+
+      const pDiv = document.createElement('div');
+      pDiv.className = 'papers-container';
+
+      sub.papers.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'paper-btn';
+        btn.innerHTML = `<b>${p.name}</b><span class="paper-time">${p.time} min</span>`;
+        btn.addEventListener('click', () => toSetup(sub.name, p.name, p.time));
+        pDiv.appendChild(btn);
+      });
+
+      card.appendChild(pDiv);
+      grid.appendChild(card);
+    });
+
+    if (id === 'electives') {
+      const custom = document.createElement('div');
+      custom.className = 'custom-card';
+      const label = document.createElement('span');
+      label.className = 'custom-card-label';
+      label.textContent = '+ 自訂考試';
+      custom.appendChild(label);
+      custom.addEventListener('click', () => toSetup('自訂科目', '自訂卷別', 60));
+      grid.appendChild(custom);
+    }
+  }
+
+  // --- View Switching ---
+  function switchView(name: string) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(`view-${name}`)?.classList.add('active');
+    currentView = name;
+
+    const backBtn = document.getElementById('backBtn') as HTMLElement;
+    backBtn.style.display = name === 'menu' ? 'none' : 'flex';
+  }
+
+  function handleNavBack() {
+    if (currentView === 'timer') {
+      if (!confirm('確定要結束考試計時並返回設置嗎？')) return;
+    }
+    switchView(currentView === 'setup' ? 'menu' : 'setup');
+  }
+
+  function toSetup(sub: string, paper: string, time: number) {
+    examData = { subject: sub, paper };
+    (document.getElementById('setupSubjectInput') as HTMLInputElement).value = sub;
+    (document.getElementById('setupPaperInput') as HTMLInputElement).value = paper;
+    (document.getElementById('inputDuration') as HTMLInputElement).value = String(time);
+    (document.getElementById('inputStartTime') as HTMLInputElement).value = '08:30';
+    (document.getElementById('inputCode') as HTMLInputElement).value = defaultSettings.code;
+    (document.getElementById('inputVenue') as HTMLInputElement).value = defaultSettings.venue;
+    switchView('setup');
+  }
+
+  function startExam() {
+    const d = (document.getElementById('inputDate') as HTMLInputElement).value;
+    const t = (document.getElementById('inputStartTime') as HTMLInputElement).value;
+    const dur = parseInt((document.getElementById('inputDuration') as HTMLInputElement).value);
+
+    if (!d || !t || !dur) { alert('請填寫完整的時間與日期'); return; }
+
+    examData.venueCode = (document.getElementById('inputCode') as HTMLInputElement).value;
+    examData.venueName = (document.getElementById('inputVenue') as HTMLInputElement).value;
+    examData.lang = (document.getElementById('inputLang') as HTMLSelectElement).value;
+
+    const startObj = new Date(`${d}T${t}`);
+    const endObj = new Date(startObj.getTime() + dur * 60000);
+    examData.startObj = startObj;
+    examData.endObj = endObj;
+
+    (document.getElementById('infoVenueCode') as HTMLElement).textContent = examData.venueCode;
+    (document.getElementById('infoVenueName') as HTMLElement).textContent = examData.venueName;
+    (document.getElementById('infoSubject') as HTMLElement).textContent = `${examData.subject} - ${examData.paper}`;
+    (document.getElementById('infoLang') as HTMLElement).textContent = examData.lang;
+
+    const year = startObj.getFullYear();
+    const month = startObj.getMonth() + 1;
+    const day = startObj.getDate();
+    const dateStr = `${year}年${month}月${day}日`;
+    const timeStr = `${startObj.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })} – ${endObj.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
+    (document.getElementById('infoTime') as HTMLElement).textContent = `${dateStr}, ${timeStr}`;
+
+    voiceFlags = { start: false, rem15: false, rem5: false, end: false };
+    switchView('timer');
+    updateRealTimeClock();
+  }
+
+  // --- Voice ---
+  function toggleVoice() {
+    isVoiceEnabled = !isVoiceEnabled;
+    updateVoiceIcon();
+    if (isVoiceEnabled) {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+      }
+    } else {
+      window.speechSynthesis?.cancel();
+    }
+  }
+
+  function updateVoiceIcon() {
+    const muteIcon = document.getElementById('icon-mute') as HTMLElement;
+    const soundIcon = document.getElementById('icon-sound') as HTMLElement;
+    muteIcon.style.display = isVoiceEnabled ? 'none' : 'block';
+    soundIcon.style.display = isVoiceEnabled ? 'block' : 'none';
+  }
+
+  function speak(text: string) {
+    if (!isVoiceEnabled || !window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.95;
+    const voices = window.speechSynthesis.getVoices();
+    const v = voices.find(v => v.lang === 'zh-HK') ||
+              voices.find(v => v.lang === 'zh-TW') ||
+              voices.find(v => v.lang.indexOf('zh') > -1);
+    if (v) u.voice = v;
+    window.speechSynthesis.speak(u);
+  }
+
+  function testVoice() {
+    if (!isVoiceEnabled) { isVoiceEnabled = true; updateVoiceIcon(); }
+    speak('語音測試正常，聲音清晰。');
+  }
+
+  // --- Settings ---
+  function loadSettings() {
+    try {
+      const saved = localStorage.getItem('dseTimerSettings');
+      if (saved) defaultSettings = JSON.parse(saved);
+    } catch {}
+  }
+
+  function openSettings() {
+    (document.getElementById('setDefCode') as HTMLInputElement).value = defaultSettings.code;
+    (document.getElementById('setDefVenue') as HTMLInputElement).value = defaultSettings.venue;
+    document.getElementById('settingsModal')?.classList.add('active');
+  }
+
+  function closeSettings() {
+    document.getElementById('settingsModal')?.classList.remove('active');
+  }
+
+  function saveSettings() {
+    const c = (document.getElementById('setDefCode') as HTMLInputElement).value.trim();
+    const v = (document.getElementById('setDefVenue') as HTMLInputElement).value.trim();
+    if (c) defaultSettings.code = c;
+    if (v) defaultSettings.venue = v;
+    localStorage.setItem('dseTimerSettings', JSON.stringify(defaultSettings));
+    closeSettings();
+  }
+
+  // --- Clock & Timer ---
+  function updateRealTimeClock() {
+    const now = new Date();
+    const sec = now.getSeconds();
+    const min = now.getMinutes();
+    const hr = now.getHours();
+
+    const sDeg = (sec / 60) * 360;
+    const mDeg = (min / 60) * 360 + (sec / 60) * 6;
+    const hDeg = (hr / 12) * 360 + (min / 60) * 30;
+
+    const sh = document.getElementById('secondHand') as HTMLElement;
+    const mh = document.getElementById('minuteHand') as HTMLElement;
+    const hh = document.getElementById('hourHand') as HTMLElement;
+    if (sh) sh.style.transform = `translateX(-50%) rotate(${sDeg}deg)`;
+    if (mh) mh.style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
+    if (hh) hh.style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
+
+    const rtd = document.getElementById('realTimeDisplay');
+    if (rtd) rtd.textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+
+    if (currentView === 'timer') updateExamStatus(now);
+  }
+
+  function updateExamStatus(now: Date) {
+    const start = examData.startObj as Date;
+    const end = examData.endObj as Date;
+    const badge = document.getElementById('statusBadge') as HTMLElement;
+    const remDisplay = document.getElementById('remainTimeDisplay') as HTMLElement;
+
+    if (now < start) {
+      badge.className = 'status-badge st-wait';
+      badge.textContent = '等待開考 (Waiting)';
+      const diffMin = Math.ceil((start.getTime() - now.getTime()) / 60000);
+      remDisplay.textContent = `${diffMin} min to Start`;
+    } else if (now >= start && now < end) {
+      badge.className = 'status-badge st-run';
+      badge.textContent = '考試進行中 (In Progress)';
+
+      const diffMs = end.getTime() - now.getTime();
+      const dH = Math.floor(diffMs / 3600000);
+      const dM = Math.floor((diffMs % 3600000) / 60000);
+      const dS = Math.floor((diffMs % 60000) / 1000);
+      remDisplay.textContent = (dH > 0 ? `${dH}h ` : '') + `${dM}m ${dS}s`;
+
+      if (!voiceFlags.start) { voiceFlags.start = true; speak('現在是開考時間，請開始作答。'); }
+
+      if (diffMs <= 15 * 60 * 1000 && diffMs > 15 * 60 * 1000 - 2000 && !voiceFlags.rem15) {
+        voiceFlags.rem15 = true; speak('距離考試結束還有十五分鐘。');
+      }
+      if (diffMs <= 5 * 60 * 1000 && diffMs > 5 * 60 * 1000 - 2000 && !voiceFlags.rem5) {
+        voiceFlags.rem5 = true;
+        badge.className = 'status-badge st-end';
+        speak('距離考試結束還有五分鐘。');
+      }
+    } else {
+      badge.className = 'status-badge st-end';
+      badge.textContent = '考試結束 (Finished)';
+      remDisplay.textContent = '0m 0s';
+
+      if (!voiceFlags.end) {
+        voiceFlags.end = true;
+        speak('考試結束，請停止作答。');
+      }
+    }
+  }
+
+  function toggleFull() {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen?.();
+  }
+
+  function generateClockMarkings() {
+    const c = document.getElementById('markings');
+    if (!c) return;
+    for (let i = 0; i < 60; i += 5) {
+      const m = document.createElement('div');
+      m.className = 'marking bold';
+      m.style.transform = `translateX(-50%) rotate(${i * 6}deg)`;
+      c.appendChild(m);
+    }
+  }
+
+  // Bootstrap
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>

@@ -1,0 +1,74 @@
+/* HioTEC Design Tokens — single source of truth */
+:root {
+  /* --- Fonts --- */
+  --font-display: 'Satoshi', sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* --- Colors: Warm (default) --- */
+  --color-bg: #FAF7F2;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F5F0EA;
+  --color-border: #E8E0D4;
+  --color-border-light: #F0EBE3;
+
+  --color-text-primary: #1A1715;
+  --color-text-secondary: #6B6560;
+  --color-text-tertiary: #9C958C;
+
+  --color-accent: #D2691E;
+  --color-accent-hover: #B85A18;
+  --color-accent-subtle: #D2691E12;
+  --color-accent-light: #FDF5EF;
+
+  --color-blue: #4A90D9;
+  --color-blue-subtle: #4A90D914;
+
+  --color-success: #3B9B6D;
+  --color-warning: #D4940A;
+  --color-error: #C53030;
+
+  /* --- Spacing (base 8px) --- */
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* --- Border Radius --- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* --- Shadows --- */
+  --shadow-sm: 0 1px 3px rgba(26, 23, 21, 0.06), 0 1px 2px rgba(26, 23, 21, 0.04);
+  --shadow-md: 0 4px 12px rgba(26, 23, 21, 0.08), 0 2px 4px rgba(26, 23, 21, 0.04);
+  --shadow-lg: 0 12px 32px rgba(26, 23, 21, 0.10), 0 4px 8px rgba(26, 23, 21, 0.06);
+  --shadow-xl: 0 24px 48px rgba(26, 23, 21, 0.12), 0 8px 16px rgba(26, 23, 21, 0.06);
+
+  /* --- Layout --- */
+  --max-width: 960px;
+
+  /* --- Motion --- */
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-move: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 80ms;
+  --duration-short: 200ms;
+  --duration-medium: 320ms;
+
+  /* --- Typography Scale --- */
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-body-sm: 14px;
+  --text-body: 16px;
+  --text-lead: 18px;
+  --text-h3: 24px;
+  --text-h2: 32px;
+  --text-h1: 48px;
+}

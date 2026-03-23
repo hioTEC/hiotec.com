@@ -1,0 +1,107 @@
+---
+const navLinks = [
+  { href: '/#tools', label: '工具' },
+  { href: '/#about', label: '關於' },
+];
+---
+
+<nav class="nav" id="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">HioTEC</a>
+
+    <div class="nav-links">
+      {navLinks.map(link => (
+        <a href={link.href} class="nav-link">{link.label}</a>
+      ))}
+    </div>
+
+    <a href="/tools/dse-timer" class="btn btn-accent nav-cta">開始使用</a>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 12px 0;
+    background: rgba(250, 247, 242, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-short) var(--ease-move),
+                background var(--duration-short) var(--ease-move),
+                box-shadow var(--duration-short) var(--ease-move);
+  }
+
+  .nav.scrolled {
+    border-bottom-color: var(--color-border);
+    box-shadow: var(--shadow-sm);
+    background: rgba(250, 247, 242, 0.95);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .nav-logo:hover {
+    color: var(--color-text-primary);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    flex: 1;
+  }
+
+  .nav-link {
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--duration-short) var(--ease-move);
+  }
+
+  /* Sibling dimming */
+  .nav-links:hover .nav-link {
+    color: var(--color-text-tertiary);
+  }
+
+  .nav-links .nav-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .nav-cta {
+    flex-shrink: 0;
+    font-size: var(--text-body-sm);
+    padding: 8px 18px;
+  }
+
+  @media (max-width: 640px) {
+    .nav-links {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav?.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+</script>

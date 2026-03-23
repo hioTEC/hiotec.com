@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404 — 找不到頁面 | HioTEC" description="找不到你要的頁面。">
+  <div class="not-found">
+    <div class="container">
+      <div class="nf-content">
+        <div class="nf-code mono">404</div>
+        <h1 class="nf-title">找不到頁面</h1>
+        <p class="nf-desc">你要找的頁面不存在，或已被移除。</p>
+        <a href="/" class="btn btn-accent">返回首頁</a>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .not-found {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+  }
+
+  .nf-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-3xl) 0;
+  }
+
+  .nf-code {
+    font-size: 80px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-accent);
+    letter-spacing: -4px;
+  }
+
+  .nf-title {
+    font-size: var(--text-h2);
+  }
+
+  .nf-desc {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    max-width: 360px;
+  }
+</style>

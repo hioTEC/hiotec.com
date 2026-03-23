@@ -1,0 +1,39 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="footer-brand">HioTEC</span>
+    <span class="footer-copy">&copy; {year} HioTEC. 為 DSE 學生而建。</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--space-3xl);
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .footer-brand {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--color-text-tertiary);
+    letter-spacing: -0.3px;
+  }
+
+  .footer-copy {
+    font-size: var(--text-body-sm);
+    color: var(--color-text-tertiary);
+  }
+</style>
