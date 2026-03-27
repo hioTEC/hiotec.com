@@ -27,7 +27,7 @@ const navLinks = [
     right: 0;
     z-index: 100;
     padding: 12px 0;
-    background: rgba(250, 247, 242, 0.85);
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid transparent;
@@ -39,7 +39,7 @@ const navLinks = [
   .nav.scrolled {
     border-bottom-color: var(--color-border);
     box-shadow: var(--shadow-sm);
-    background: rgba(250, 247, 242, 0.95);
+    background: color-mix(in srgb, var(--color-bg) 95%, transparent);
   }
 
   .nav-inner {

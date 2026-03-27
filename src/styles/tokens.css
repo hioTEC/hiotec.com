@@ -6,28 +6,28 @@
   --font-body: 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* --- Colors: Warm (default) --- */
-  --color-bg: #FAF7F2;
-  --color-surface: #FFFFFF;
-  --color-surface-hover: #F5F0EA;
-  --color-border: #E8E0D4;
-  --color-border-light: #F0EBE3;
+  /* --- Colors: Light (Claude-aligned) --- */
+  --color-bg: #f8f8f7;              /* Claude bg-000 */
+  --color-surface: #f4f3ee;         /* Claude bg-100 "Pampas" cream */
+  --color-surface-hover: #f0eee5;   /* Claude bg-200 */
+  --color-border: #e7e4d7;          /* Claude bg-300 */
+  --color-border-light: #f0eee5;    /* Claude bg-200 */
 
-  --color-text-primary: #1A1715;
-  --color-text-secondary: #6B6560;
-  --color-text-tertiary: #9C958C;
+  --color-text-primary: #0e0e0d;    /* Claude text-000 */
+  --color-text-secondary: #535045;  /* Claude text-300 */
+  --color-text-tertiary: #737063;   /* Claude text-500 */
 
-  --color-accent: #D2691E;
-  --color-accent-hover: #B85A18;
-  --color-accent-subtle: #D2691E12;
-  --color-accent-light: #FDF5EF;
+  --color-accent: #C15F3C;          /* Claude terracotta (marketing) */
+  --color-accent-hover: #aa5234;    /* Claude accent-main-000 */
+  --color-accent-subtle: #C15F3C12;
+  --color-accent-light: #f2e0da;    /* Claude accent-main-900 */
 
-  --color-blue: #4A90D9;
-  --color-blue-subtle: #4A90D914;
+  --color-blue: #1b6bbb;            /* Claude accent-secondary-000 */
+  --color-blue-subtle: #1b6bbb14;
 
-  --color-success: #3B9B6D;
-  --color-warning: #D4940A;
-  --color-error: #C53030;
+  --color-success: #1d9e75;         /* Claude teal-400 */
+  --color-warning: #ba7517;         /* Claude amber-400 */
+  --color-error: #a72419;           /* Claude danger-100 */
 
   /* --- Spacing (base 8px) --- */
   --space-2xs: 2px;
@@ -71,4 +71,36 @@
   --text-h3: 24px;
   --text-h2: 32px;
   --text-h1: 48px;
+}
+
+/* --- Dark Mode (Claude-aligned) --- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1a1a19;              /* Claude gray-950 */
+    --color-surface: #242422;         /* Claude gray-850 */
+    --color-surface-hover: #2c2c2a;   /* Claude gray-800 */
+    --color-border: #444441;          /* Claude gray-600 */
+    --color-border-light: #353532;    /* Claude gray-700 */
+
+    --color-text-primary: #f8f8f7;    /* Claude bg-000 inverted */
+    --color-text-secondary: #888780;  /* Claude gray-400 */
+    --color-text-tertiary: #6b6a64;   /* Claude gray-500 */
+
+    --color-accent: #C46849;          /* Claude dark terracotta */
+    --color-accent-hover: #d4795a;
+    --color-accent-subtle: #C4684920;
+    --color-accent-light: #2e2220;    /* deep warm tint */
+
+    --color-blue: #3f91e3;            /* Claude accent-secondary-200 */
+    --color-blue-subtle: #3f91e320;
+
+    --color-success: #5dcaa5;         /* Claude teal-200 */
+    --color-warning: #ef9f27;         /* Claude amber-200 */
+    --color-error: #f09595;           /* Claude red-200 */
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
 }

@@ -96,13 +96,13 @@ a:hover {
 
 .btn-accent {
   background: var(--color-accent);
-  color: #FFFFFF;
+  color: #ffffff;
   box-shadow: var(--shadow-sm);
 }
 
 .btn-accent:hover {
   background: var(--color-accent-hover);
-  color: #FFFFFF;
+  color: #ffffff;
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
