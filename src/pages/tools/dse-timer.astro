@@ -194,7 +194,7 @@ import Base from '../../layouts/Base.astro';
     display: flex;
     align-items: center;
     padding: 0 var(--space-lg);
-    background: rgba(250, 247, 242, 0.9);
+    background: color-mix(in srgb, var(--color-bg) 90%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
@@ -369,7 +369,7 @@ import Base from '../../layouts/Base.astro';
   }
 
   :global(.paper-btn:hover .paper-time) {
-    color: rgba(255,255,255,0.8);
+    color: color-mix(in srgb, #ffffff 80%, transparent);
   }
 
   :global(.paper-time) {
@@ -492,7 +492,7 @@ import Base from '../../layouts/Base.astro';
   }
 
   .btn-primary:hover {
-    background: #000;
+    background: var(--color-text-primary);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
   }
@@ -617,7 +617,7 @@ import Base from '../../layouts/Base.astro';
     width: 5px;
     height: 112px;
     z-index: 6;
-    background: #4b5563;
+    background: var(--color-text-secondary);
   }
 
   .second {
@@ -696,7 +696,7 @@ import Base from '../../layouts/Base.astro';
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(26, 23, 21, 0.5);
+    background: color-mix(in srgb, var(--color-text-primary) 50%, transparent);
     z-index: 200;
     display: none;
     align-items: center;
