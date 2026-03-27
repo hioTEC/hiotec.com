@@ -8,22 +8,26 @@ const features = [
   {
     title: '一鍵導入',
     description: '上傳 PDF，AI 自動提取題目、答案、評分準則。支持中英雙語，幾分鐘內完成整份試卷的數碼化。',
-    mockupHint: '截圖需求：PDF 上傳 → 進度條 → 提取出的題目卡片，展示 3 步流程',
+    screenshot: '/screenshots/import.png',
+    screenshotAlt: 'Import Queue — PDF 上傳與自動提取介面',
   },
   {
     title: '智能組卷',
     description: '按主題、難度、年份篩選，一鍵生成模擬考卷。支持 Paper 1 長題目和 Paper 2 選擇題格式。',
-    mockupHint: '截圖需求：篩選面板 + 生成的 Paper 1 / Paper 2 考卷預覽',
+    screenshot: '/screenshots/questions.png',
+    screenshotAlt: 'Question Bank — 篩選面板與題目列表',
   },
   {
     title: '社區題庫',
     description: '分享你出的好題到公共題庫，使用人數多的題目可以獲得點數。除了我們出的公共題庫之外，其餘題目來自社區分享。',
-    mockupHint: '截圖需求：題目卡片 + 分享按鈕 + 點數 / 熱度指標',
+    screenshot: '/screenshots/quiz.png',
+    screenshotAlt: 'Quiz Manager — 測驗管理與分享',
   },
   {
     title: '練習追蹤',
     description: '錯題自動歸類，弱點主題一目了然。個性化推薦練習，幫學生精準補強。',
-    mockupHint: '截圖需求：學生 Dashboard — 錯題熱力圖 + 弱項雷達圖',
+    screenshot: '/screenshots/overview.png',
+    screenshotAlt: 'Dashboard — 學習數據總覽與弱項分析',
   },
 ];
 ---
@@ -65,7 +69,8 @@ const features = [
           <FeatureBlock
             title={f.title}
             description={f.description}
-            mockupHint={f.mockupHint}
+            screenshot={f.screenshot}
+            screenshotAlt={f.screenshotAlt}
             index={i}
           />
         ))}

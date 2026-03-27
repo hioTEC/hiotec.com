@@ -2,11 +2,12 @@
 interface Props {
   title: string;
   description: string;
-  mockupHint: string;
+  screenshot: string;
+  screenshotAlt: string;
   index: number;
 }
 
-const { title, description, mockupHint, index } = Astro.props;
+const { title, description, screenshot, screenshotAlt, index } = Astro.props;
 ---
 
 <div class="feature-block" data-index={index}>
@@ -15,15 +16,14 @@ const { title, description, mockupHint, index } = Astro.props;
     <h3 class="feature-title">{title}</h3>
     <p class="feature-desc">{description}</p>
   </div>
-  <div class="feature-mockup" aria-hidden="true">
-    <div class="mockup-placeholder">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <circle cx="8.5" cy="8.5" r="1.5" />
-        <path d="M21 15l-5-5L5 21" />
-      </svg>
-      <p class="mockup-hint">{mockupHint}</p>
-    </div>
+  <div class="feature-mockup">
+    <img
+      src={screenshot}
+      alt={screenshotAlt}
+      class="mockup-img"
+      loading="lazy"
+      decoding="async"
+    />
   </div>
 </div>
 
@@ -76,28 +76,11 @@ const { title, description, mockupHint, index } = Astro.props;
     justify-content: center;
   }
 
-  .mockup-placeholder {
+  .mockup-img {
     width: 100%;
-    aspect-ratio: 4 / 3;
-    background: var(--color-accent-light);
     border-radius: var(--radius-lg);
-    border: 1px dashed var(--color-border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-md);
-    padding: var(--space-xl);
-    color: var(--color-text-tertiary);
-    text-align: center;
-  }
-
-  .mockup-hint {
-    font-size: var(--text-body-sm);
-    color: var(--color-text-tertiary);
-    line-height: 1.5;
-    margin: 0;
-    max-width: 260px;
+    border: 1px solid var(--color-border-light);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   }
 
   @media (max-width: 768px) {
@@ -108,10 +91,6 @@ const { title, description, mockupHint, index } = Astro.props;
 
     .feature-mockup {
       order: -1;
-    }
-
-    .mockup-placeholder {
-      aspect-ratio: 16 / 10;
     }
   }
 </style>
