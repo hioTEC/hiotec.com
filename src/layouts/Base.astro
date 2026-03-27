@@ -65,8 +65,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://hiotec.c
     />
   </head>
   <body>
+    <a href="#main-content" class="skip-nav">跳至主要內容</a>
     <Nav />
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     {!noFooter && <Footer />}
