@@ -92,7 +92,7 @@ import Base from '../../layouts/Base.astro';
               <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
               測試語音
             </button>
-            <button class="btn-primary" id="startExamBtn">確認並顯示計時器</button>
+            <button class="btn-start" id="startExamBtn">確認並顯示計時器</button>
           </div>
         </div>
       </div>
@@ -475,7 +475,7 @@ import Base from '../../layouts/Base.astro';
     background: color-mix(in srgb, var(--color-accent) 18%, transparent);
   }
 
-  .btn-primary {
+  .btn-start {
     display: block;
     width: 100%;
     background: var(--color-text-primary);
@@ -491,7 +491,7 @@ import Base from '../../layouts/Base.astro';
     box-shadow: var(--shadow-sm);
   }
 
-  .btn-primary:hover {
+  .btn-start:hover {
     background: var(--color-text-primary);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
