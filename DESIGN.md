@@ -9,7 +9,7 @@
 ## Aesthetic Direction
 - **Direction:** Warm Editorial
 - **Decoration level:** Intentional — 微妙圆角、卡片微影、阴影区分层级
-- **Mood:** 小红书的精致感 + Claude 的暖质感 + SaveMyExams 的功能清晰度。认真做工具的人，但不无聊。
+- **Mood:** Claude.ai 的暖质感（色系完全对齐）+ 小红书的精致感 + SaveMyExams 的功能清晰度。认真做工具的人，但不无聊。
 - **Reference sites:** savemyexams.com, assessprep.com, claude.ai, Xiaohongshu
 
 ## Typography
