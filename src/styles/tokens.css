@@ -62,15 +62,15 @@
   --duration-short: 200ms;
   --duration-medium: 320ms;
 
-  /* --- Typography Scale --- */
+  /* --- Typography Scale (fluid) --- */
   --text-xs: 11px;
   --text-sm: 13px;
   --text-body-sm: 14px;
   --text-body: 16px;
-  --text-lead: 18px;
-  --text-h3: 24px;
-  --text-h2: 32px;
-  --text-h1: 48px;
+  --text-lead: clamp(16px, 1vw + 14px, 18px);
+  --text-h3: clamp(20px, 1.5vw + 14px, 24px);
+  --text-h2: clamp(26px, 2vw + 18px, 32px);
+  --text-h1: clamp(36px, 4vw + 20px, 48px);
 }
 
 /* --- Dark Mode (Claude-aligned) --- */
