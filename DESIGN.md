@@ -71,6 +71,20 @@
 - **Card hover:** translateY(-2px) + shadow-md，而非 border-color 变化
 - **Serif accent:** 品牌标语和 pull quotes 用 Instrument Serif italic，和 sans-serif body 形成对比
 
+## 设计约定（Landing Page）
+
+| 约定 | 规则 |
+|------|------|
+| 对齐 | Container 居中 (960px)，内容左对齐。仅 Hero 居中 |
+| 卡片 | 只用于平级并列（学科模块）。Feature 说明不套卡片 |
+| 卡片风格 | 1px `--color-border-light`，无默认 shadow，hover `0 4px 20px rgba(0,0,0,0.04)` + sibling dimming（`:has()` 透明背景） |
+| 截图占位 | 圆角 `radius-lg`，暖色 `--color-accent-light` 衬底 + dashed border，内含占位文字说明需要什么功能截图 |
+| 间距节奏 | section 间 `3xl`(64px)，section 内 `2xl`(48px)，紧密元素 `md`(16px) |
+| 字体层级 | Hero h1: Satoshi 900 / Section h2: Satoshi 700 / Feature 标题: PJS 700 / 副标题: Instrument Serif italic |
+| 色彩使用 | Accent 只用于 CTA 和 badge 强调，不铺满。大面积用 bg/surface 暖色层次 |
+| Section 分隔 | 1px `--color-border-light` top border，不用背景色切换 |
+| Feature 展示 | 左文右图 2 列 grid，mobile 时图在上文在下 |
+
 ## Decisions Log
 | Date | Decision | Rationale |
 |------|----------|-----------|
@@ -82,6 +96,7 @@
 | 2026-03-23 | 12-16px border-radius | 小红书风格圆角，区别于 4px 政务风和 24px 卡通风 |
 | 2026-03-23 | Instrument Serif for editorial accents | 参考 Claude.com 衬线体用法，用于标语和引用 |
 | 2026-03-23 | Claude.com interaction patterns | floating nav, sibling dimming, quick-action pills, premium easing |
+| 2026-03-27 | 落地页重设计 | 从工具集合页转为品牌落地页。mathqb 作为旗舰产品 showcase，加路线图和愿景。参考 claude.com/product/cowork |
 
 ## Previews
 - Warm variant: `~/.gstack/demos/hiotec-design-system-preview.html`

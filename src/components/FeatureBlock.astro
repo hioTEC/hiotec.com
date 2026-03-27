@@ -1,0 +1,117 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  mockupHint: string;
+  index: number;
+}
+
+const { title, description, mockupHint, index } = Astro.props;
+---
+
+<div class="feature-block" data-index={index}>
+  <div class="feature-text">
+    <div class="feature-number mono">{String(index + 1).padStart(2, '0')}</div>
+    <h3 class="feature-title">{title}</h3>
+    <p class="feature-desc">{description}</p>
+  </div>
+  <div class="feature-mockup" aria-hidden="true">
+    <div class="mockup-placeholder">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <path d="M21 15l-5-5L5 21" />
+      </svg>
+      <p class="mockup-hint">{mockupHint}</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .feature-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .feature-block:first-child {
+    border-top: none;
+  }
+
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .feature-number {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    font-weight: 500;
+  }
+
+  .feature-title {
+    font-family: var(--font-body);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .feature-desc {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 420px;
+  }
+
+  .feature-mockup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mockup-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-accent-light);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--color-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    color: var(--color-text-tertiary);
+    text-align: center;
+  }
+
+  .mockup-hint {
+    font-size: var(--text-body-sm);
+    color: var(--color-text-tertiary);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 260px;
+  }
+
+  @media (max-width: 768px) {
+    .feature-block {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .feature-mockup {
+      order: -1;
+    }
+
+    .mockup-placeholder {
+      aspect-ratio: 16 / 10;
+    }
+  }
+</style>
