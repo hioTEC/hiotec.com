@@ -9,13 +9,19 @@ const navLinks = [
   <div class="nav-inner container">
     <a href="/" class="nav-logo">HioTEC</a>
 
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       {navLinks.map(link => (
         <a href={link.href} class="nav-link">{link.label}</a>
       ))}
+      <a href="/tools/dse-timer" class="btn btn-accent nav-cta-mobile">開始使用</a>
     </div>
 
     <a href="/tools/dse-timer" class="btn btn-accent nav-cta">開始使用</a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="開關導航選單" aria-expanded="false" aria-controls="navLinks">
+      <svg class="icon-menu" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -92,16 +98,110 @@ const navLinks = [
     padding: 8px 18px;
   }
 
+  .nav-cta-mobile {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    margin-left: auto;
+    transition: background var(--duration-short) var(--ease-move),
+                color var(--duration-short) var(--ease-move);
+  }
+
+  .nav-toggle:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+  }
+
+  .nav-toggle .icon-close {
+    display: none;
+  }
+
+  .nav-toggle[aria-expanded="true"] .icon-menu {
+    display: none;
+  }
+
+  .nav-toggle[aria-expanded="true"] .icon-close {
+    display: block;
+  }
+
   @media (max-width: 640px) {
     .nav-links {
       display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: color-mix(in srgb, var(--color-bg) 98%, transparent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-sm) 0;
     }
+
+    .nav-links.open {
+      display: flex;
+      animation: fadeSlideDown 0.2s var(--ease-enter);
+    }
+
+    .nav-link {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--text-body);
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    .nav-cta-mobile {
+      display: inline-flex;
+      margin: var(--space-sm) var(--space-xl) var(--space-md);
+      justify-content: center;
+    }
+
+    .nav-toggle {
+      display: flex;
+    }
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 </style>
 
 <script>
   const nav = document.getElementById('nav');
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+
   window.addEventListener('scroll', () => {
     nav?.classList.toggle('scrolled', window.scrollY > 20);
   }, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const open = links?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  links?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('.nav-link, .nav-cta-mobile')) {
+      links.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
 </script>
