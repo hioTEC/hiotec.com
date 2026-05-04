@@ -1,7 +1,8 @@
 # hiotec.com Agent Context
 
-Read `~/.agents/workspace.md` first for global identity, hard constraints, and
-active-run protocol.
+Read `~/src/hpanel/protocol/workspace.md` first for global methodology, hard
+constraints, and active-run protocol. Read `~/src/hpanel/persona/voice.md` for
+operator voice.
 
 ## Project Context
 
